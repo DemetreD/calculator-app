@@ -12,8 +12,24 @@ const multiplyNumbers = (a,b) => a * b;
 const divideNumbers = (a,b) => {
     if (b === 0) {
         console.log("Cant divide by zero!");
+    }else{
+        return a / b;
     }
-    return a / b;
 }
 
+const operate = function(num1,num2,operator) {
+ 
+    switch (operator) {
+        case "+":
+            return addNumbers(num1,num2);
+        case "-":
+            return subtractNumbers(num1,num2);
+        case "*":
+            return multiplyNumbers(num1,num2);
+        case "/":
+            return divideNumbers(num1,num2);
+        default:
+            return "Invalid operator";
+    }
+}
 
