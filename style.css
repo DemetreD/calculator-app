@@ -23,7 +23,14 @@ body {
 }
 
 .calculator_display {
+  display: flex;
+  justify-content: end;
   border: 3px solid gray;
+  padding: 1rem;
+}
+
+.calculator_display p {
+  font-size: 2em;
 }
 
 .buttons {
