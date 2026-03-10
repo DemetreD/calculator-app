@@ -19,12 +19,21 @@ body {
 
 .calculator {
   border: 5px solid black;
-  width: 400px;
-  height: 500px;
+  width: 350px;
 }
 
 .calculator_display {
   border: 3px solid gray;
-  /* padding: 2rem 1rem; */
-  /* margin: 1rem; */
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  height: 400px;
+}
+
+.buttons button {
+  padding: 1rem;
+  font-size: 1.2rem;
+  cursor: pointer;
 }
