@@ -1,5 +1,6 @@
 "use strict";
 
+const calculatorDisplay = document.querySelector('.display')
 
 //functions
 const addNumbers = (a,b) => a + b;
@@ -32,4 +33,3 @@ const operate = function(num1,num2,operator) {
             return "Invalid operator";
     }
 }
-
