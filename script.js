@@ -35,6 +35,11 @@ const operate = function(num1,num2,operator) {
     }
 }
 
+let firstNumber = "";
+let operator = "";
+let secondNumber = "";
+
+
 
 buttons.forEach(button =>{
     button.addEventListener('click', () => {
