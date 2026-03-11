@@ -19,8 +19,8 @@ body {
 
 .calculator {
   border: 5px solid black;
-  width: 400px;
-  padding: 2rem;
+  width: 350px;
+  padding: 1.5rem;
 }
 
 .calculator_display {
@@ -37,7 +37,7 @@ body {
 .buttons {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  height: 400px;
+  height: 300px;
   gap: 0.5rem;
   margin-top: 1rem;
 }
