@@ -1,6 +1,7 @@
 "use strict";
 
 const calculatorDisplay = document.querySelector('.display')
+const buttons = document.querySelectorAll('.btn');
 
 //functions
 const addNumbers = (a,b) => a + b;
@@ -33,3 +34,14 @@ const operate = function(num1,num2,operator) {
             return "Invalid operator";
     }
 }
+
+
+buttons.forEach(button =>{
+    button.addEventListener('click', () => {
+        if (calculatorDisplay.textContent === "0") {
+            calculatorDisplay.textContent = button.dataset.value;
+        }else {
+            calculatorDisplay.textContent =  calculatorDisplay.textContent + button.dataset.value ;
+        }
+    });
+});
