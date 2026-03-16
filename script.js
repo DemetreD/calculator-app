@@ -53,7 +53,7 @@ buttons.forEach(button =>{
         }else if(button.classList.contains('operator')){
             firstNumber = calculatorDisplay.textContent;
             operator = button.dataset.value;
-            calculatorDisplay.textContent = "0";
+            calculatorDisplay.textContent = firstNumber + button.dataset.value;
         }else if(button.classList.contains('equals')) {
             secondNumber = calculatorDisplay.textContent;
             const result = operate(Number(firstNumber), Number(secondNumber), operator);
