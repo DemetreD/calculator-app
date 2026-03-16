@@ -43,10 +43,28 @@ let secondNumber = "";
 
 buttons.forEach(button =>{
     button.addEventListener('click', () => {
-        if (calculatorDisplay.textContent === "0") {
-            calculatorDisplay.textContent = button.dataset.value;
-        }else {
-            calculatorDisplay.textContent =  calculatorDisplay.textContent + button.dataset.value ;
+
+        if (button.classList.contains('number')) {
+            if (calculatorDisplay.textContent === "0") {
+                calculatorDisplay.textContent = button.dataset.value;
+            }else {
+                calculatorDisplay.textContent += button.dataset.value ;
+            }
+        }else if(button.classList.contains('operator')){
+            firstNumber = calculatorDisplay.textContent;
+            operator = button.dataset.value;
+            calculatorDisplay.textContent = "0";
+        }else if(button.classList.contains('equals')) {
+            secondNumber = calculatorDisplay.textContent;
+            const result = operate(Number(firstNumber), Number(secondNumber), operator);
+            calculatorDisplay.textContent = result;
+        }else if(button.classList.contains('clear')) {
+            calculatorDisplay.textContent = "0";
+            firstNumber = "";
+            operator = "";
+            secondNumber ="";
         }
+        
     });
 });
+
