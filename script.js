@@ -2,6 +2,8 @@
 
 const calculatorDisplay = document.querySelector('.display')
 const buttons = document.querySelectorAll('.btn');
+const errorMessage = document.getElementById('errorMessage');
+
 
 //functions
 const addNumbers = (a,b) => a + b;
@@ -13,7 +15,8 @@ const multiplyNumbers = (a,b) => a * b;
 
 const divideNumbers = (a,b) => {
     if (b === 0) {
-        console.log("Cant divide by zero!");
+        return "Error";
+        
     }else{
         return a / b;
     }
@@ -71,6 +74,17 @@ buttons.forEach(button =>{
             if (firstNumber !== "" && operator !== "" && secondNumber !== "") {
                 const result = operate(Number(firstNumber), Number(secondNumber), operator)
                 calculatorDisplay.textContent = result;
+
+
+                if(result === "Error") {
+                    errorMessage.textContent = "Can't divide by zero";
+                    calculatorDisplay.textContent = "0";
+                    firstNumber = "";
+                    operator = "";
+                    secondNumber ="";   
+                    return;
+                }
+
                 firstNumber = String(result);
                 secondNumber = "";
 
