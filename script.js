@@ -48,6 +48,8 @@ buttons.forEach(button =>{
     button.addEventListener('click', () => {
         const value = button.dataset.value;
 
+        errorMessage.classList.add('hide');
+
         if (button.classList.contains('number')) {
             if(operator === ""){
                 firstNumber += value;
@@ -78,10 +80,11 @@ buttons.forEach(button =>{
 
                 if(result === "Error") {
                     errorMessage.textContent = "Can't divide by zero";
+                    errorMessage.classList.remove('hide');  
                     calculatorDisplay.textContent = "0";
                     firstNumber = "";
                     operator = "";
-                    secondNumber ="";   
+                    secondNumber ="";
                     return;
                 }
 
