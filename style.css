@@ -39,7 +39,6 @@ body {
 .buttons {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  height: 300px;
   gap: 0.5rem;
   margin-top: 1rem;
 }
@@ -48,6 +47,7 @@ body {
   padding: 1rem;
   font-size: 1.2rem;
   cursor: pointer;
+  min-height: 60px;
 }
 
 .error-message-text {
