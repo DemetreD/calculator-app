@@ -58,3 +58,8 @@ body {
 .hide {
   display: none;
 }
+
+.clear,
+.backspace {
+  grid-column: span 2;
+}
