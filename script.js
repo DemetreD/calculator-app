@@ -43,21 +43,39 @@ let secondNumber = "";
 
 buttons.forEach(button =>{
     button.addEventListener('click', () => {
+        const value = button.dataset.value;
 
         if (button.classList.contains('number')) {
-            if (calculatorDisplay.textContent === "0") {
-                calculatorDisplay.textContent = button.dataset.value;
+            if(operator === ""){
+                firstNumber += value;
+                calculatorDisplay.textContent = firstNumber;
             }else {
-                calculatorDisplay.textContent += button.dataset.value ;
+                secondNumber += value;
+                calculatorDisplay.textContent = `${firstNumber} ${operator} ${secondNumber}`;
             }
+           
         }else if(button.classList.contains('operator')){
-            firstNumber = calculatorDisplay.textContent;
-            operator = button.dataset.value;
-            calculatorDisplay.textContent = firstNumber + button.dataset.value;
+            if(firstNumber !== "" && secondNumber !== ""){
+                const result = operate(Number(firstNumber), Number(secondNumber), operator);
+                firstNumber = String(result);
+                secondNumber = "";
+                operator = value;
+                calculatorDisplay.textContent = `${firstNumber} ${operator}`;
+            }else if (firstNumber !== "") {
+                operator = value;
+                calculatorDisplay.textContent = `${firstNumber} ${operator}`;
+            }
+
+          
         }else if(button.classList.contains('equals')) {
-            secondNumber = calculatorDisplay.textContent;
-            const result = operate(Number(firstNumber), Number(secondNumber), operator);
-            calculatorDisplay.textContent = result;
+            if (firstNumber !== "" && operator !== "" && secondNumber !== "") {
+                const result = operate(Number(firstNumber), Number(secondNumber), operator)
+                calculatorDisplay.textContent = result;
+                firstNumber = String(result);
+                secondNumber = "";
+
+            }
+           
         }else if(button.classList.contains('clear')) {
             calculatorDisplay.textContent = "0";
             firstNumber = "";
