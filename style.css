@@ -17,19 +17,25 @@ body {
   flex-direction: column;
   gap: 1rem;
   justify-content: center;
+  background-color: #1a1a2e;
+  color: #ffffff;
 }
 
 .calculator {
   border: 5px solid black;
   width: 350px;
   padding: 1.5rem;
+  background-color: #16213e;
+  border-radius: 12px;
 }
 
 .calculator_display {
   display: flex;
   justify-content: end;
-  border: 3px solid gray;
   padding: 1rem;
+  background-color: #000000;
+  border-radius: 8px;
+  border: none;
 }
 
 .calculator_display p {
@@ -48,6 +54,8 @@ body {
   font-size: 1.2rem;
   cursor: pointer;
   min-height: 60px;
+  border-radius: 8px;
+  border: none;
 }
 
 .error-message-text {
@@ -61,5 +69,25 @@ body {
 
 .clear,
 .backspace {
+  background-color: #e94560;
+  color: white;
   grid-column: span 2;
+}
+
+.number {
+  background-color: #0f3460;
+  color: #fff;
+}
+.operator {
+  background-color: #e94560;
+  color: #fff;
+}
+.equals {
+  background-color: #e94560;
+  color: #fff;
+}
+
+button:hover {
+  opacity: 0.8;
+  cursor: pointer;
 }
