@@ -3,7 +3,7 @@
 const calculatorDisplay = document.querySelector('.display')
 const buttons = document.querySelectorAll('.btn');
 const errorMessage = document.getElementById('errorMessage');
-
+const decimalBtn = document.getElementById('decimal');
 
 //functions
 const addNumbers = (a,b) => a + b;
@@ -51,18 +51,27 @@ buttons.forEach(button =>{
         errorMessage.classList.add('hide');
 
         if (button.classList.contains('number')) {
+            
             if(operator === ""){
                 firstNumber += value;
                 calculatorDisplay.textContent = firstNumber;
+                if (value === ".") {
+                    decimalBtn.disabled = true;
+                }
             }else {
                 secondNumber += value;
                 calculatorDisplay.textContent = `${firstNumber} ${operator} ${secondNumber}`;
+                if (value === ".") {
+                    decimalBtn.disabled = true;
+                }
             }
            
         }else if(button.classList.contains('operator')){
+            decimalBtn.disabled = false;
             if(firstNumber !== "" && secondNumber !== ""){
                 const result = operate(Number(firstNumber), Number(secondNumber), operator);
-                firstNumber = String(result);
+                const rounded = parseFloat(result.toFixed(10));
+                firstNumber = String(rounded);
                 secondNumber = "";
                 operator = value;
                 calculatorDisplay.textContent = `${firstNumber} ${operator}`;
@@ -75,9 +84,8 @@ buttons.forEach(button =>{
         }else if(button.classList.contains('equals')) {
             if (firstNumber !== "" && operator !== "" && secondNumber !== "") {
                 const result = operate(Number(firstNumber), Number(secondNumber), operator)
-                calculatorDisplay.textContent = result;
-
-
+                
+                
                 if(result === "Error") {
                     errorMessage.textContent = "Can't divide by zero";
                     errorMessage.classList.remove('hide');  
@@ -87,9 +95,12 @@ buttons.forEach(button =>{
                     secondNumber ="";
                     return;
                 }
-
-                firstNumber = String(result);
+                
+                const rounded = parseFloat(result.toFixed(10));
+                calculatorDisplay.textContent = rounded;
+                firstNumber = String(rounded);
                 secondNumber = "";
+                operator = "";
 
             }
            
@@ -98,6 +109,7 @@ buttons.forEach(button =>{
             firstNumber = "";
             operator = "";
             secondNumber ="";
+            decimalBtn.disabled = false;
         }
         
     });
