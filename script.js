@@ -66,6 +66,7 @@ const handleEquals = () => {
         firstNumber = String(rounded);
         secondNumber = "";
         operator = "";
+        updateDecimalButton();
 
     }
 }
@@ -90,6 +91,49 @@ const handleBackspace = () => {
         updateDecimalButton();
 }
 
+
+const handleNumberInput = (value) => {
+            
+            if(operator === ""){
+                if (value === "." && firstNumber.includes(".")) return;
+                
+                if(value === "." && firstNumber === "") {
+                    firstNumber = "0.";
+                }else {
+                    firstNumber += value;
+                }
+
+                calculatorDisplay.textContent = firstNumber;
+
+            }else {
+               if(value === "." && secondNumber.includes(".")) return;
+
+               if(value === "." && secondNumber === "") {
+                secondNumber = "0.";
+               }else{
+                secondNumber += value;
+               }
+               calculatorDisplay.textContent = `${firstNumber} ${operator} ${secondNumber}`;
+
+            }
+            updateDecimalButton();
+}
+
+const handleOperatorInput = (value) => {
+    decimalBtn.disabled = false;
+    if(firstNumber !== "" && secondNumber !== ""){
+        const result = operate(Number(firstNumber), Number(secondNumber), operator);
+        const rounded = parseFloat(result.toFixed(10));
+        firstNumber = String(rounded);
+        secondNumber = "";
+        operator = value;
+        calculatorDisplay.textContent = `${firstNumber} ${operator}`;
+    }else if (firstNumber !== "") {
+        operator = value;
+        calculatorDisplay.textContent = `${firstNumber} ${operator}`;
+        }
+}
+
 const clearDisplay = () => {
     calculatorDisplay.textContent = "0";
     firstNumber = "";
@@ -111,35 +155,13 @@ buttons.forEach(button =>{
         errorMessage.classList.add('hide');
 
         if (button.classList.contains('number')) {
-            
-            if(operator === ""){
-                firstNumber += value;
-                calculatorDisplay.textContent = firstNumber;
-                if (value === ".") {
-                    updateDecimalButton();
-                }
-            }else {
-                secondNumber += value;
-                calculatorDisplay.textContent = `${firstNumber} ${operator} ${secondNumber}`;
-                if (value === ".") {
-                    updateDecimalButton();
-                }
-            }
-           
-        }else if(button.classList.contains('operator')){
-            decimalBtn.disabled = false;
-            if(firstNumber !== "" && secondNumber !== ""){
-                const result = operate(Number(firstNumber), Number(secondNumber), operator);
-                const rounded = parseFloat(result.toFixed(10));
-                firstNumber = String(rounded);
-                secondNumber = "";
-                operator = value;
-                calculatorDisplay.textContent = `${firstNumber} ${operator}`;
-            }else if (firstNumber !== "") {
-                operator = value;
-                calculatorDisplay.textContent = `${firstNumber} ${operator}`;
-            }
 
+            handleNumberInput(value);
+
+        }
+        else if(button.classList.contains('operator')){
+
+            handleOperatorInput(value);
           
         }else if(button.classList.contains('equals')) {
             handleEquals();
@@ -155,28 +177,20 @@ buttons.forEach(button =>{
 });
 
 document.addEventListener('keydown', (e) => {
-    console.log(e.key);
+    errorMessage.classList.add('hide');
 
-    if(e.key >= "0" && e.key <= "9") {
-        if(operator === ""){
-                firstNumber += e.key;
-                calculatorDisplay.textContent = firstNumber;
-                if (e.key === ".") {
-                    updateDecimalButton();
-                }
-            }else {
-                secondNumber += e.key;
-                calculatorDisplay.textContent = `${firstNumber} ${operator} ${secondNumber}`;
-                if (e.key === ".") {
-                    updateDecimalButton();
-                }
-            }
-    }else if(e.key === 'Enter'){
+    if(e.key >= "0" && e.key <= "9"){
+        handleNumberInput(e.key);
+    }else if(e.key === "."){
+        handleNumberInput(e.key);
+    }else if(e.key === "+" || e.key === "-" || e.key === "*" || e.key === "/"){
+        handleOperatorInput(e.key);
+    }else if(e.key === "Enter" || e.key === "="){
         handleEquals();
-    }else if(e.key === 'Backspace'){
-         handleBackspace();
+    }else if(e.key === "Backspace") {
+        handleBackspace();
+    }else if(e.key === "C" || e.key === "c") {
+        clearDisplay();
     }
-
-    
     
 });
