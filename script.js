@@ -104,7 +104,24 @@ buttons.forEach(button =>{
 
             }
            
-        }else if(button.classList.contains('clear')) {
+        }else if(button.classList.contains('backspace')){
+            if(secondNumber !== ""){
+                secondNumber = secondNumber.slice(0,-1);
+
+                if (secondNumber !== "") {
+                    calculatorDisplay.textContent = `${firstNumber} ${operator} ${secondNumber}`
+                }else {
+                    calculatorDisplay.textContent = `${firstNumber} ${operator}`;
+                }
+            }else if (operator !== ""){
+                operator = "";
+                calculatorDisplay.textContent = firstNumber;
+            }else if(firstNumber !== ""){
+                firstNumber = firstNumber.slice(0,-1);
+                calculatorDisplay.textContent = firstNumber !== "" ? firstNumber : "0";
+            }
+        }
+        else if(button.classList.contains('clear')) {
             calculatorDisplay.textContent = "0";
             firstNumber = "";
             operator = "";
