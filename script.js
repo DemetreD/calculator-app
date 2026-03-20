@@ -38,6 +38,14 @@ const operate = function(num1,num2,operator) {
     }
 }
 
+const updateDecimalButton = () => {
+    if (operator === "") {
+        decimalBtn.disabled = firstNumber.includes(".");
+    }else {
+        decimalBtn.disabled = secondNumber.includes(".");
+    }
+}
+
 let firstNumber = "";
 let operator = "";
 let secondNumber = "";
@@ -56,13 +64,13 @@ buttons.forEach(button =>{
                 firstNumber += value;
                 calculatorDisplay.textContent = firstNumber;
                 if (value === ".") {
-                    decimalBtn.disabled = true;
+                    updateDecimalButton();
                 }
             }else {
                 secondNumber += value;
                 calculatorDisplay.textContent = `${firstNumber} ${operator} ${secondNumber}`;
                 if (value === ".") {
-                    decimalBtn.disabled = true;
+                    updateDecimalButton();
                 }
             }
            
@@ -113,6 +121,7 @@ buttons.forEach(button =>{
                 }else {
                     calculatorDisplay.textContent = `${firstNumber} ${operator}`;
                 }
+                
             }else if (operator !== ""){
                 operator = "";
                 calculatorDisplay.textContent = firstNumber;
@@ -120,13 +129,15 @@ buttons.forEach(button =>{
                 firstNumber = firstNumber.slice(0,-1);
                 calculatorDisplay.textContent = firstNumber !== "" ? firstNumber : "0";
             }
+
+            updateDecimalButton();
         }
         else if(button.classList.contains('clear')) {
             calculatorDisplay.textContent = "0";
             firstNumber = "";
             operator = "";
             secondNumber ="";
-            decimalBtn.disabled = false;
+            updateDecimalButton();
         }
         
     });
