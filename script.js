@@ -46,6 +46,58 @@ const updateDecimalButton = () => {
     }
 }
 
+
+const handleEquals = () => {
+     if (firstNumber !== "" && operator !== "" && secondNumber !== "") {
+        const result = operate(Number(firstNumber), Number(secondNumber), operator)
+                
+        if(result === "Error") {
+            errorMessage.textContent = "Can't divide by zero";
+            errorMessage.classList.remove('hide');  
+            calculatorDisplay.textContent = "0";
+            firstNumber = "";
+            operator = "";
+            secondNumber ="";
+            return;
+        }
+                
+        const rounded = parseFloat(result.toFixed(10));
+        calculatorDisplay.textContent = rounded;
+        firstNumber = String(rounded);
+        secondNumber = "";
+        operator = "";
+
+    }
+}
+
+const handleBackspace = () => {
+     if(secondNumber !== ""){
+        secondNumber = secondNumber.slice(0,-1);
+
+        if (secondNumber !== "") {
+            calculatorDisplay.textContent = `${firstNumber} ${operator} ${secondNumber}`
+        }else {
+            calculatorDisplay.textContent = `${firstNumber} ${operator}`;
+            }        
+        }else if (operator !== ""){
+            operator = "";
+            calculatorDisplay.textContent = firstNumber;
+        }else if(firstNumber !== ""){
+            firstNumber = firstNumber.slice(0,-1);
+            calculatorDisplay.textContent = firstNumber !== "" ? firstNumber : "0";
+        }
+
+        updateDecimalButton();
+}
+
+const clearDisplay = () => {
+    calculatorDisplay.textContent = "0";
+    firstNumber = "";
+    operator = "";
+    secondNumber ="";
+    updateDecimalButton();
+}
+
 let firstNumber = "";
 let operator = "";
 let secondNumber = "";
@@ -90,56 +142,41 @@ buttons.forEach(button =>{
 
           
         }else if(button.classList.contains('equals')) {
-            if (firstNumber !== "" && operator !== "" && secondNumber !== "") {
-                const result = operate(Number(firstNumber), Number(secondNumber), operator)
-                
-                
-                if(result === "Error") {
-                    errorMessage.textContent = "Can't divide by zero";
-                    errorMessage.classList.remove('hide');  
-                    calculatorDisplay.textContent = "0";
-                    firstNumber = "";
-                    operator = "";
-                    secondNumber ="";
-                    return;
-                }
-                
-                const rounded = parseFloat(result.toFixed(10));
-                calculatorDisplay.textContent = rounded;
-                firstNumber = String(rounded);
-                secondNumber = "";
-                operator = "";
-
-            }
+            handleEquals();
            
         }else if(button.classList.contains('backspace')){
-            if(secondNumber !== ""){
-                secondNumber = secondNumber.slice(0,-1);
-
-                if (secondNumber !== "") {
-                    calculatorDisplay.textContent = `${firstNumber} ${operator} ${secondNumber}`
-                }else {
-                    calculatorDisplay.textContent = `${firstNumber} ${operator}`;
-                }
-                
-            }else if (operator !== ""){
-                operator = "";
-                calculatorDisplay.textContent = firstNumber;
-            }else if(firstNumber !== ""){
-                firstNumber = firstNumber.slice(0,-1);
-                calculatorDisplay.textContent = firstNumber !== "" ? firstNumber : "0";
-            }
-
-            updateDecimalButton();
+            handleBackspace();
         }
         else if(button.classList.contains('clear')) {
-            calculatorDisplay.textContent = "0";
-            firstNumber = "";
-            operator = "";
-            secondNumber ="";
-            updateDecimalButton();
+            clearDisplay();
         }
         
     });
 });
 
+document.addEventListener('keydown', (e) => {
+    console.log(e.key);
+
+    if(e.key >= "0" && e.key <= "9") {
+        if(operator === ""){
+                firstNumber += e.key;
+                calculatorDisplay.textContent = firstNumber;
+                if (e.key === ".") {
+                    updateDecimalButton();
+                }
+            }else {
+                secondNumber += e.key;
+                calculatorDisplay.textContent = `${firstNumber} ${operator} ${secondNumber}`;
+                if (e.key === ".") {
+                    updateDecimalButton();
+                }
+            }
+    }else if(e.key === 'Enter'){
+        handleEquals();
+    }else if(e.key === 'Backspace'){
+         handleBackspace();
+    }
+
+    
+    
+});
