@@ -36,10 +36,18 @@ body {
   background-color: #000000;
   border-radius: 8px;
   border: none;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .calculator_display p {
   font-size: 2em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
 }
 
 .buttons {
